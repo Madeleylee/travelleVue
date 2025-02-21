@@ -1,0 +1,21 @@
+@import './reset.css';
+@import './variables.css';
+
+body {
+    font-family: 'Montserrat', 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--color-text);
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    padding-bottom: 60px;
+    /* Ajusta este valor según la altura de tu footer */
+}

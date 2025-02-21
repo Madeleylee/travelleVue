@@ -1,0 +1,146 @@
+{
+    "paises": [
+        {
+            "id": 1,
+            "name": "spain",
+            "ciudades": {
+                "Granada": {
+                    "lugares": [
+                        {
+                            "rutaImagen": [
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731884455/Travelle/espana/alhambra/img1.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731884454/Travelle/espana/alhambra/img2.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731884454/Travelle/espana/alhambra/img3.jpg"
+                            ],
+                            "nombre": "La Alhambra",
+                            "ubicacion_url": "https://www.google.es/travel/entity/key/ChUI_8SGkfG99MaAARoIL20vMDdoX2oQBA/overview?ts=CAEaBAoCGgAqBAoAGgA&utm_campaign=sharing&utm_medium=link_btn&utm_source=poi",
+                            "tipo": "historia",
+                            "precio": 14.0,
+                            "valoracion": 4.8
+                        }
+                    ]
+                },
+                "Barcelona": {
+                    "lugares": [
+                        {
+                            "rutaImagen": [
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731940950/Travelle/espana/sagradaFamilia/img1.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731940950/Travelle/espana/sagradaFamilia/img2.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731940950/Travelle/espana/sagradaFamilia/img3.jpg"
+                            ],
+                            "nombre": "Basílica de la Sagrada Família",
+                            "ubicacion_url": "https://maps.app.goo.gl/2drFQuJ4naZUpErS6",
+                            "tipo": "arte",
+                            "precio": 26.0,
+                            "valoracion": 4.8
+                        },
+                        {
+                            "rutaImagen": [
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731886605/Travelle/espana/guell/img1.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731886605/Travelle/espana/guell/img2.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731886605/Travelle/espana/guell/img3.jpg"
+                            ],
+                            "nombre": "Parque Güell",
+                            "ubicacion_url": "https://maps.app.goo.gl/ng34sGJrVwu1e2DCA",
+                            "tipo": "naturaleza",
+                            "precio": 10.0,
+                            "valoracion": 4.6
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 2,
+            "name": "italy",
+            "ciudades": {
+                "Roma": {
+                    "lugares": [
+                        {
+                            "rutaImagen": [
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731941637/Travelle/italia/coliseoRomano/img1.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731941636/Travelle/italia/coliseoRomano/img2.jpg",
+                                "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731941636/Travelle/italia/coliseoRomano/img3.jpg"
+                            ],
+                            "nombre": "Coliseo de Roma",
+                            "ubicacion_url": "https://maps.app.goo.gl/JHMdg1V1hUXeS5wY9",
+                            "tipo": "historia",
+                            "precio": 18.0,
+                            "valoracion": 4.7
+                        }
+                    ]
+                },
+                "Florencia": {
+                    "lugares": [
+                        {
+                            "rutaImagen": [
+                                "https://source.unsplash.com/400x300/?florence,duomo",
+                                "https://source.unsplash.com/400x300/?florence,italy",
+                                "https://source.unsplash.com/400x300/?florence,architecture"
+                            ],
+                            "nombre": "Catedral de Florencia",
+                            "ubicacion_url": "https://maps.app.goo.gl/Xm1Hrtb5Bbq",
+                            "tipo": "arte",
+                            "precio": 15.0,
+                            "valoracion": 4.8
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 3,
+            "name": "germany",
+            "ciudades": {
+                "Berlin": {
+                    "lugares": [
+                        {
+                            "rutaImagen": [
+                                "https://source.unsplash.com/400x300/?berlin,brandenburg",
+                                "https://source.unsplash.com/400x300/?berlin,architecture",
+                                "https://source.unsplash.com/400x300/?berlin,landmark"
+                            ],
+                            "nombre": "Puerta de Brandeburgo",
+                            "ubicacion_url": "https://maps.app.goo.gl/qLhYx",
+                            "tipo": "historia",
+                            "precio": 0.0,
+                            "valoracion": 4.8
+                        }
+                    ]
+                },
+                "Munich": {
+                    "lugares": [
+                        {
+                            "rutaImagen": [
+                                "https://source.unsplash.com/400x300/?munich,marienplatz",
+                                "https://source.unsplash.com/400x300/?munich,germany",
+                                "https://source.unsplash.com/400x300/?munich,landscape"
+                            ],
+                            "nombre": "Marienplatz",
+                            "ubicacion_url": "https://maps.app.goo.gl/7YFbG",
+                            "tipo": "arquitectura",
+                            "precio": 0.0,
+                            "valoracion": 4.7
+                        }
+                    ]
+                },
+                "Hamburg": {
+                    "lugares": [
+                        {
+                            "rutaImagen": [
+                                "https://source.unsplash.com/400x300/?hamburg,elbe",
+                                "https://source.unsplash.com/400x300/?hamburg,germany",
+                                "https://source.unsplash.com/400x300/?hamburg,harbor"
+                            ],
+                            "nombre": "Puerto de Hamburgo",
+                            "ubicacion_url": "https://maps.app.goo.gl/wC5Yx",
+                            "tipo": "naturaleza",
+                            "precio": 0.0,
+                            "valoracion": 4.6
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
