@@ -28,14 +28,13 @@
         </div>
         <div class="nav-section right">
             <div class="search-container">
-                <input v-model="searchQuery" @input="searchDestinos" type="text" placeholder="Buscar destino..."
-                    class="search-input">
+                <input v-model="searchQuery" @input="searchDestinos" @keyup.enter="handleSearch" type="text"
+                    placeholder="Buscar destino o ciudad..." class="search-input">
                 <ul v-if="searchResults.length > 0" class="search-results">
-                    <li v-for="result in searchResults" :key="result.nombre">
-                        <router-link
-                            :to="{ name: 'Destino', params: { nombrePais: result.pais, nombreCiudad: result.ciudad, nombreDestino: result.nombre } }">
-                            {{ result.nombre }} ({{ result.ciudad }}, {{ result.pais }})
-                        </router-link>
+                    <li v-for="result in searchResults" :key="result.id">
+                        <a @click="navigateToResult(result)" class="search-result-link">
+                            {{ result.nombre }} ({{ result.tipo === 'ciudad' ? 'Ciudad' : 'Lugar' }}, {{ result.pais }})
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -44,37 +43,74 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import data from '@/assets/data/data.json'
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import data from '@/assets/data/data.json';
 
-const route = useRoute()
-const paises = ref(data.paises)
-const searchQuery = ref('')
-const searchResults = ref([])
-
-const activePais = computed(() => {
-    const nombrePais = route.params.nombrePais
-    return paises.value.find(pais => pais.name === nombrePais)?.id
-})
+const router = useRouter();
+const paises = ref(data.paises);
+const searchQuery = ref('');
+const searchResults = ref([]);
 
 function searchDestinos() {
     if (searchQuery.value.length < 2) {
-        searchResults.value = []
-        return
+        searchResults.value = [];
+        return;
     }
 
-    searchResults.value = paises.value.flatMap(pais =>
-        Object.entries(pais.ciudades).flatMap(([nombreCiudad, ciudad]) =>
-            ciudad.lugares.filter(lugar =>
-                lugar.nombre.toLowerCase().includes(searchQuery.value.toLowerCase())
-            ).map(lugar => ({
-                ...lugar,
-                pais: pais.name,
-                ciudad: nombreCiudad
-            }))
-        )
-    ).slice(0, 5)
+    const results = [];
+    paises.value.forEach(pais => {
+        // Buscar ciudades
+        Object.keys(pais.ciudades).forEach(nombreCiudad => {
+            if (nombreCiudad.toLowerCase().includes(searchQuery.value.toLowerCase())) {
+                results.push({
+                    id: `ciudad-${pais.name}-${nombreCiudad}`,
+                    nombre: nombreCiudad,
+                    tipo: 'ciudad',
+                    pais: pais.name
+                });
+            }
+
+            // Buscar lugares
+            pais.ciudades[nombreCiudad].lugares.forEach(lugar => {
+                if (lugar.nombre.toLowerCase().includes(searchQuery.value.toLowerCase())) {
+                    results.push({
+                        id: `lugar-${pais.name}-${nombreCiudad}-${lugar.nombre}`,
+                        nombre: lugar.nombre,
+                        tipo: 'lugar',
+                        pais: pais.name,
+                        ciudad: nombreCiudad
+                    });
+                }
+            });
+        });
+    });
+
+    searchResults.value = results.slice(0, 5);
+}
+
+function navigateToResult(result) {
+    if (result.tipo === 'ciudad') {
+        router.push({
+            name: 'Pais',
+            params: { nombrePais: result.pais },
+            query: { ciudad: result.nombre }
+        });
+    } else {
+        router.push({
+            name: 'Pais',
+            params: { nombrePais: result.pais },
+            query: { ciudad: result.ciudad, lugar: result.nombre }
+        });
+    }
+    searchQuery.value = '';
+    searchResults.value = [];
+}
+
+function handleSearch() {
+    if (searchResults.value.length > 0) {
+        navigateToResult(searchResults.value[0]);
+    }
 }
 </script>
 
@@ -229,5 +265,17 @@ function searchDestinos() {
     .search-input {
         width: 150px;
     }
+}
+
+.search-result-link {
+    cursor: pointer;
+    display: block;
+    padding: 0.5rem;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.search-result-link:hover {
+    background-color: var(--color-background);
 }
 </style>

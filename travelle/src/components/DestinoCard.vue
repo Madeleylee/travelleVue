@@ -14,8 +14,14 @@
                     {{ destino.valoracion.toFixed(1) }}
                 </p>
             </div>
-            <router-link :to="{ name: 'Destino', params: { nombrePais, nombreCiudad, nombreDestino: destino.nombre } }"
-                class="btn-ver-mas">
+            <router-link :to="{
+                name: 'Destino',
+                params: {
+                    nombrePais,
+                    nombreCiudad,
+                    nombreDestino: destino.nombre
+                }
+            }" class="btn-ver-mas">
                 Ver más
             </router-link>
         </div>
@@ -128,7 +134,6 @@ defineProps({
 .btn-ver-mas:hover {
     background-color: var(--color-accent);
 }
-
 
 @media (max-width: 768px) {
     .destino-card {

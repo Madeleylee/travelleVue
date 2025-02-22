@@ -1,9 +1,11 @@
 <template>
     <div class="ciudad-view" v-if="ciudad">
         <h1>Destinos en {{ nombreCiudad }}</h1>
-        <div class="lugares-grid">
-            <DestinoCard v-for="lugar in ciudad.lugares" :key="lugar.nombre" :destino="lugar" :nombrePais="nombrePais"
-                :nombreCiudad="nombreCiudad" />
+        <div class="lugares-container">
+            <div class="lugares-grid">
+                <DestinoCard v-for="lugar in ciudad.lugares" :key="lugar.nombre" :destino="lugar"
+                    :nombrePais="nombrePais" :nombreCiudad="nombreCiudad" />
+            </div>
         </div>
     </div>
     <div v-else class="error-view">
@@ -15,8 +17,8 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import DestinoCard from "@/components/DestinoCard.vue";
-import data from "@/assets/data/data.json";
+import DestinoCard from "../components/DestinoCard.vue";
+import data from "../assets/data/data.json";
 
 const route = useRoute();
 
@@ -32,8 +34,8 @@ const ciudad = computed(() => {
 <style scoped>
 .ciudad-view {
     padding: 2rem;
-    min-height: calc(100vh - 60px);
-    /* Ajusta esto según la altura de tu footer */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 h1 {
@@ -43,12 +45,14 @@ h1 {
     text-align: center;
 }
 
+.lugares-container {
+    padding: 0 1rem;
+}
+
 .lugares-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .error-view {
@@ -71,12 +75,6 @@ h1 {
     background-color: var(--color-accent);
 }
 
-@media (max-width: 1200px) {
-    .lugares-grid {
-        padding: 0 2rem;
-    }
-}
-
 @media (max-width: 1024px) {
     .lugares-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -90,34 +88,12 @@ h1 {
 
     h1 {
         font-size: 2rem;
-        margin-bottom: 1.5rem;
     }
 
     .lugares-grid {
         grid-template-columns: 1fr;
         max-width: 400px;
-        padding: 0;
-    }
-}
-
-/* Estilos para cuando hay un solo lugar */
-.lugares-grid:has(> *:first-child:nth-last-child(1)) {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.lugares-grid>*:first-child:nth-last-child(1) {
-    grid-column: 1;
-}
-
-@media (max-width: 1024px) {
-    .lugares-grid:has(> *:first-child:nth-last-child(1)) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .lugares-grid:has(> *:first-child:nth-last-child(1)) {
-        grid-template-columns: 1fr;
+        margin: 0 auto;
     }
 }
 </style>

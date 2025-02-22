@@ -2,56 +2,78 @@
     <div class="pais-view" v-if="pais">
         <h1>Destinos en {{ nombrePais }}</h1>
         <div class="ciudades-nav">
-            <button @click="ciudadSeleccionada = null" :class="{ active: ciudadSeleccionada === null }"
-                class="btn-ciudad">
+            <button @click="selectCiudad(null)" :class="{ active: !ciudadSeleccionada }" class="btn-ciudad">
                 Todos
             </button>
-            <button v-for="(_, ciudad) in pais.ciudades" :key="ciudad" @click="ciudadSeleccionada = ciudad"
+            <button v-for="(_, ciudad) in pais.ciudades" :key="ciudad" @click="selectCiudad(ciudad)"
                 :class="{ active: ciudadSeleccionada === ciudad }" class="btn-ciudad">
                 {{ ciudad }}
             </button>
         </div>
-        <div class="destinos-grid">
-            <template v-if="ciudadSeleccionada">
-                <DestinoCard v-for="lugar in lugaresFiltered" :key="lugar.nombre" :destino="lugar"
-                    :nombrePais="nombrePais" :nombreCiudad="ciudadSeleccionada" />
-            </template>
-            <template v-else>
-                <div v-for="(lugares, ciudad) in pais.ciudades" :key="ciudad" class="ciudad-section">
-                    <h2 class="ciudad-titulo">{{ ciudad }}</h2>
-                    <div class="ciudad-lugares">
-                        <DestinoCard v-for="lugar in lugares.lugares" :key="lugar.nombre" :destino="lugar"
-                            :nombrePais="nombrePais" :nombreCiudad="ciudad" />
-                    </div>
-                </div>
-            </template>
-        </div>
+        <DestinosPorCiudad v-if="ciudadSeleccionada" :nombrePais="nombrePais" :nombreCiudad="ciudadSeleccionada"
+            :lugares="lugaresFiltered" />
+        <template v-else>
+            <div v-for="(lugares, ciudad) in pais.ciudades" :key="ciudad" class="ciudad-section">
+                <h2 class="ciudad-titulo">{{ ciudad }}</h2>
+                <DestinosPorCiudad :nombrePais="nombrePais" :nombreCiudad="ciudad" :lugares="lugares.lugares" />
+            </div>
+        </template>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
-import { useRoute } from "vue-router";
-import DestinoCard from "@/components/DestinoCard.vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import DestinosPorCiudad from "@/components/DestinosPorCiudad.vue";
 import data from "@/assets/data/data.json";
 
 const route = useRoute();
+const router = useRouter();
+
 const nombrePais = computed(() => route.params.nombrePais);
 const ciudadSeleccionada = ref(null);
+const lugarSeleccionado = ref(null);
 
 const pais = computed(() =>
     data.paises.find((p) => p.name === nombrePais.value)
 );
 
-const lugaresFiltered = computed(() =>
-    ciudadSeleccionada.value ?
-        pais.value?.ciudades[ciudadSeleccionada.value].lugares :
-        []
-);
+const lugaresFiltered = computed(() => {
+    if (!pais.value || !ciudadSeleccionada.value) return [];
+    let lugares = pais.value.ciudades[ciudadSeleccionada.value].lugares;
+    if (lugarSeleccionado.value) {
+        lugares = lugares.filter(lugar => lugar.nombre === lugarSeleccionado.value);
+    }
+    return lugares;
+});
 
-// Resetear la ciudad seleccionada cuando cambia el país
+function selectCiudad(ciudad) {
+    ciudadSeleccionada.value = ciudad;
+    lugarSeleccionado.value = null;
+    updateRouteQuery();
+}
+
+function updateRouteQuery() {
+    router.replace({
+        query: {
+            ...(ciudadSeleccionada.value && { ciudad: ciudadSeleccionada.value }),
+            ...(lugarSeleccionado.value && { lugar: lugarSeleccionado.value })
+        }
+    });
+}
+
+onMounted(() => {
+    if (route.query.ciudad) {
+        ciudadSeleccionada.value = route.query.ciudad;
+    }
+    if (route.query.lugar) {
+        lugarSeleccionado.value = route.query.lugar;
+    }
+});
+
 watch(() => route.params.nombrePais, () => {
-    ciudadSeleccionada.value = null;
+    ciudadSeleccionada.value = route.query.ciudad || null;
+    lugarSeleccionado.value = route.query.lugar || null;
 });
 </script>
 
