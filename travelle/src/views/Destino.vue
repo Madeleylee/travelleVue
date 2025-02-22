@@ -1,3 +1,57 @@
+<script setup>
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import data from "../assets/data/data.json";
+
+const route = useRoute();
+const router = useRouter();
+
+const nombrePais = computed(() => route.params.nombrePais);
+const nombreCiudad = computed(() => route.params.nombreCiudad);
+const nombreDestino = computed(() => route.params.nombreDestino);
+
+const destino = computed(() => {
+  const pais = data.paises.find(p => p.name === nombrePais.value);
+  if (pais) {
+    const ciudad = pais.ciudades[nombreCiudad.value];
+    if (ciudad) {
+      return ciudad.lugares.find(lugar => lugar.nombre === nombreDestino.value);
+    }
+  }
+  return null;
+});
+
+const imagenSeleccionada = ref(null);
+
+function abrirImagen(index) {
+  imagenSeleccionada.value = index;
+}
+
+function cerrarImagen() {
+  imagenSeleccionada.value = null;
+}
+
+function imagenAnterior() {
+  if (imagenSeleccionada.value > 0) {
+    imagenSeleccionada.value--;
+  }
+}
+
+function imagenSiguiente() {
+  if (imagenSeleccionada.value < destino.value.rutaImagen.length - 1) {
+    imagenSeleccionada.value++;
+  }
+}
+
+function volverAtras() {
+  router.go(-1);
+}
+
+if (!destino.value) {
+  router.push({ name: 'Home' });
+}
+</script>
+
 <template>
   <div class="destino-view" v-if="destino">
     <div class="header-container">
@@ -59,59 +113,6 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import data from "@/assets/data/data.json";
-
-const route = useRoute();
-const router = useRouter();
-
-const nombrePais = computed(() => route.params.nombrePais);
-const nombreCiudad = computed(() => route.params.nombreCiudad);
-const nombreDestino = computed(() => route.params.nombreDestino);
-
-const destino = computed(() => {
-  const pais = data.paises.find(p => p.name === nombrePais.value);
-  if (pais) {
-    const ciudad = pais.ciudades[nombreCiudad.value];
-    if (ciudad) {
-      return ciudad.lugares.find(lugar => lugar.nombre === nombreDestino.value);
-    }
-  }
-  return null;
-});
-
-const imagenSeleccionada = ref(null);
-
-function abrirImagen(index) {
-  imagenSeleccionada.value = index;
-}
-
-function cerrarImagen() {
-  imagenSeleccionada.value = null;
-}
-
-function imagenAnterior() {
-  if (imagenSeleccionada.value > 0) {
-    imagenSeleccionada.value--;
-  }
-}
-
-function imagenSiguiente() {
-  if (imagenSeleccionada.value < destino.value.rutaImagen.length - 1) {
-    imagenSeleccionada.value++;
-  }
-}
-
-function volverAtras() {
-  router.go(-1);
-}
-
-if (!destino.value) {
-  router.push({ name: 'Home' });
-}
-</script>
 
 <style scoped>
 .destino-view {

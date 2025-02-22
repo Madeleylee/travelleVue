@@ -1,24 +1,7 @@
-<template>
-    <div class="home">
-        <section class="hero">
-            <h1>Descubre Europa con Travelle</h1>
-            <p>Comparte tus aventuras y encuentra nuevos destinos</p>
-        </section>
-        <section class="destinos-destacados">
-            <h2>Destinos Destacados</h2>
-            <div class="destinos-grid">
-                <DestinoCard v-for="destino in destinosAleatorios"
-                    :key="`${destino.nombre}-${destino.ciudad}-${destino.pais}`" :destino="destino"
-                    :nombrePais="destino.pais" :nombreCiudad="destino.ciudad" />
-            </div>
-        </section>
-    </div>
-</template>
-
 <script setup>
 import { computed } from 'vue';
-import DestinoCard from '@/components/DestinoCard.vue';
-import data from '@/assets/data/data.json';
+import DestinoCard from '../components/DestinoCard.vue';
+import data from '../assets/data/data.json';
 
 const todosLosDestinos = computed(() =>
     data.paises.flatMap(pais =>
@@ -38,12 +21,31 @@ const destinosAleatorios = computed(() => {
 });
 </script>
 
+<template>
+    <div class="home">
+        <section class="hero">
+            <h1>Descubre Europa con Travelle</h1>
+            <p>Comparte tus aventuras y encuentra nuevos destinos</p>
+        </section>
+        <section class="destinos-destacados">
+            <h2>Destinos Destacados</h2>
+            <div class="destinos-grid">
+                <DestinoCard v-for="destino in destinosAleatorios"
+                    :key="`${destino.nombre}-${destino.ciudad}-${destino.pais}`" :destino="destino"
+                    :nombrePais="destino.pais" :nombreCiudad="destino.ciudad" />
+            </div>
+        </section>
+    </div>
+</template>
+
+
 <style scoped>
 .home {
     padding: 2rem;
 }
 
 .hero {
+    padding: 2rem;
     text-align: center;
     margin-bottom: 2rem;
 }

@@ -1,3 +1,22 @@
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps({
+    destino: {
+        type: Object,
+        required: true
+    },
+    nombrePais: {
+        type: String,
+        required: true
+    },
+    nombreCiudad: {
+        type: String,
+        required: true
+    }
+});
+</script>
+
 <template>
     <div class="destino-card">
         <img :src="destino.rutaImagen[0]" :alt="destino.nombre" class="destino-imagen">
@@ -28,24 +47,6 @@
     </div>
 </template>
 
-<script setup>
-import { defineProps } from 'vue';
-
-defineProps({
-    destino: {
-        type: Object,
-        required: true
-    },
-    nombrePais: {
-        type: String,
-        required: true
-    },
-    nombreCiudad: {
-        type: String,
-        required: true
-    }
-});
-</script>
 
 <style scoped>
 .destino-card {

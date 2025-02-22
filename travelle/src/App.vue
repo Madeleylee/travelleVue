@@ -1,14 +1,28 @@
+<script setup>
+import NavBar from './components/NavBar.vue';
+import Footer from './components/Footer.vue';
+</script>
+
 <template>
   <div id="app">
     <NavBar />
-    <main class="main-content">
+    <div class="main-content">
       <router-view></router-view>
-    </main>
+    </div>
     <Footer />
   </div>
 </template>
 
-<script setup>
-import NavBar from './components/NavBar.vue'
-import Footer from './components/Footer.vue'
-</script>
+<style>
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 80px;
+  /* Ajusta este valor según la altura de tu NavBar */
+}
+</style>

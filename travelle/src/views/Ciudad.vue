@@ -1,3 +1,18 @@
+<script setup>
+import DestinoCard from "../components/DestinoCard.vue";
+import data from "../assets/data/data.json";
+
+const route = useRoute();
+
+const nombrePais = computed(() => route.params.nombrePais);
+const nombreCiudad = computed(() => route.params.nombreCiudad);
+
+const ciudad = computed(() => {
+    const pais = data.paises.find(p => p.name === nombrePais.value);
+    return pais ? pais.ciudades[nombreCiudad.value] : null;
+});
+</script>
+
 <template>
     <div class="ciudad-view" v-if="ciudad">
         <h1>Destinos en {{ nombreCiudad }}</h1>
@@ -14,22 +29,6 @@
     </div>
 </template>
 
-<script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-import DestinoCard from "../components/DestinoCard.vue";
-import data from "../assets/data/data.json";
-
-const route = useRoute();
-
-const nombrePais = computed(() => route.params.nombrePais);
-const nombreCiudad = computed(() => route.params.nombreCiudad);
-
-const ciudad = computed(() => {
-    const pais = data.paises.find(p => p.name === nombrePais.value);
-    return pais ? pais.ciudades[nombreCiudad.value] : null;
-});
-</script>
 
 <style scoped>
 .ciudad-view {

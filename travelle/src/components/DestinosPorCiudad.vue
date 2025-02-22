@@ -1,12 +1,3 @@
-<template>
-    <div class="destinos-por-ciudad">
-        <div class="lugares-grid">
-            <DestinoCard v-for="lugar in lugares" :key="lugar.nombre" :destino="lugar" :nombrePais="nombrePais"
-                :nombreCiudad="nombreCiudad" />
-        </div>
-    </div>
-</template>
-
 <script setup>
 import DestinoCard from "@/components/DestinoCard.vue";
 
@@ -25,6 +16,16 @@ defineProps({
     }
 });
 </script>
+
+<template>
+    <div class="destinos-por-ciudad">
+        <div class="lugares-grid">
+            <DestinoCard v-for="lugar in lugares" :key="lugar.nombre" :destino="lugar" :nombrePais="nombrePais"
+                :nombreCiudad="nombreCiudad" />
+        </div>
+    </div>
+</template>
+
 
 <style scoped>
 .destinos-por-ciudad {

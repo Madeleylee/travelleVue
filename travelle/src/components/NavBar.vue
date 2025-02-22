@@ -1,56 +1,16 @@
-<template>
-    <header class="navbar">
-        <div class="nav-section left">
-            <router-link to="/" class="home-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-home">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </router-link>
-        </div>
-        <div class="nav-section center">
-            <div class="logo-container">
-                <router-link to="/" class="logo-link">
-                    <img src="../assets/img/logo.png" alt="Travelle Logo" class="logo">
-                </router-link>
-            </div>
-            <nav class="nav-container">
-                <ul class="nav-list">
-                    <li v-for="pais in paises" :key="pais.id" class="nav-item">
-                        <router-link :to="{ name: 'Pais', params: { nombrePais: pais.name } }" class="nav-link">
-                            {{ pais.name.toUpperCase() }}
-                        </router-link>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="nav-section right">
-            <div class="search-container">
-                <input v-model="searchQuery" @input="searchDestinos" @keyup.enter="handleSearch" type="text"
-                    placeholder="Buscar destino o ciudad..." class="search-input">
-                <ul v-if="searchResults.length > 0" class="search-results">
-                    <li v-for="result in searchResults" :key="result.id">
-                        <a @click="navigateToResult(result)" class="search-result-link">
-                            {{ result.nombre }} ({{ result.tipo === 'ciudad' ? 'Ciudad' : 'Lugar' }}, {{ result.pais }})
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
-</template>
-
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import data from '@/assets/data/data.json';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import data from '../assets/data/data.json';
 
+const route = useRoute();
 const router = useRouter();
 const paises = ref(data.paises);
 const searchQuery = ref('');
 const searchResults = ref([]);
+const isHidden = ref(false);
+const lastScrollPosition = ref(0);
+const navbar = ref(null);
 
 function searchDestinos() {
     if (searchQuery.value.length < 2) {
@@ -60,7 +20,6 @@ function searchDestinos() {
 
     const results = [];
     paises.value.forEach(pais => {
-        // Buscar ciudades
         Object.keys(pais.ciudades).forEach(nombreCiudad => {
             if (nombreCiudad.toLowerCase().includes(searchQuery.value.toLowerCase())) {
                 results.push({
@@ -71,7 +30,6 @@ function searchDestinos() {
                 });
             }
 
-            // Buscar lugares
             pais.ciudades[nombreCiudad].lugares.forEach(lugar => {
                 if (lugar.nombre.toLowerCase().includes(searchQuery.value.toLowerCase())) {
                     results.push({
@@ -112,15 +70,101 @@ function handleSearch() {
         navigateToResult(searchResults.value[0]);
     }
 }
+
+function isActiveCountry(countryName) {
+    return route.params.nombrePais === countryName;
+}
+
+function onScroll() {
+    const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    if (currentScrollPosition < 0) {
+        return;
+    }
+
+    if (Math.abs(currentScrollPosition - lastScrollPosition.value) < 60) {
+        return;
+    }
+
+    isHidden.value = currentScrollPosition > lastScrollPosition.value;
+    lastScrollPosition.value = currentScrollPosition;
+}
+
+onMounted(() => {
+    window.addEventListener('scroll', onScroll);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', onScroll);
+});
 </script>
+
+<template>
+    <header class="navbar" :class="{ 'navbar-hidden': isHidden, 'navbar-visible': !isHidden }" ref="navbar">
+        <div class="nav-content">
+            <div class="nav-section left">
+                <router-link to="/" class="logo-link">
+                    <img src="../assets/img/logo.png" alt="Travelle Logo" class="logo">
+                </router-link>
+            </div>
+            <div class="nav-section center">
+                <nav class="nav-container">
+                    <ul class="nav-list">
+                        <li v-for="pais in paises" :key="pais.id" class="nav-item">
+                            <router-link :to="{ name: 'Pais', params: { nombrePais: pais.name } }" class="nav-link"
+                                :class="{ active: isActiveCountry(pais.name) }">
+                                {{ pais.name.toUpperCase() }}
+                            </router-link>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="nav-section right">
+                <div class="search-container">
+                    <h2 class="search-icon">🔍</h2>
+                    <input v-model="searchQuery" @input="searchDestinos" @keyup.enter="handleSearch" type="text"
+                        placeholder="Buscar destino o ciudad..." class="search-input">
+                    <ul v-if="searchResults.length > 0" class="search-results">
+                        <li v-for="result in searchResults" :key="result.id">
+                            <a @click="navigateToResult(result)" class="search-result-link">
+                                {{ result.nombre }} ({{ result.tipo === 'ciudad' ? 'Ciudad' : 'Lugar' }}, {{ result.pais
+                                }})
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+</template>
+
 
 <style scoped>
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--color-primary);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-hidden {
+    transform: translateY(-100%);
+}
+
+.navbar-visible {
+    transform: translateY(0);
+}
+
+.nav-content {
     display: flex;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: var(--color-primary);
-    color: white;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .nav-section {
@@ -134,42 +178,25 @@ function handleSearch() {
 
 .nav-section.center {
     flex: 1;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 .nav-section.right {
     flex: 0 0 auto;
 }
 
-.home-button {
-    color: white;
-    text-decoration: none;
+.logo-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--color-accent);
-    transition: background-color 0.3s;
-}
-
-.home-button:hover {
-    background-color: var(--color-primary-dark);
-}
-
-.logo-container {
-    margin-bottom: 1rem;
 }
 
 .logo {
-    height: 100px;
+    height: 80px;
     width: auto;
 }
 
 .nav-container {
-    width: 100%;
+    flex: 1;
 }
 
 .nav-list {
@@ -183,23 +210,39 @@ function handleSearch() {
     color: white;
     text-decoration: none;
     padding: 0.5rem 1rem;
-    transition: background-color 0.3s;
-    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 4px;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
     background-color: var(--color-accent);
+    color: var(--color-primary);
 }
 
 .search-container {
     position: relative;
+    display: flex;
+    align-items: center;
+
 }
+
+.search-icon {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+    height: auto;
+}
+
 
 .search-input {
     padding: 0.5rem;
     border: none;
     border-radius: 4px;
     width: 200px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
 }
 
 .search-results {
@@ -227,7 +270,7 @@ function handleSearch() {
 }
 
 @media (max-width: 1024px) {
-    .navbar {
+    .nav-content {
         flex-direction: column;
         padding: 1rem;
     }
@@ -239,11 +282,11 @@ function handleSearch() {
     }
 
     .nav-section.left {
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .nav-section.right {
-        justify-content: flex-end;
+        justify-content: center;
     }
 
     .nav-list {
@@ -252,7 +295,7 @@ function handleSearch() {
     }
 
     .logo {
-        height: 80px;
+        height: 60px;
     }
 }
 
@@ -263,19 +306,7 @@ function handleSearch() {
     }
 
     .search-input {
-        width: 150px;
+        width: 100%;
     }
-}
-
-.search-result-link {
-    cursor: pointer;
-    display: block;
-    padding: 0.5rem;
-    color: var(--color-text);
-    text-decoration: none;
-}
-
-.search-result-link:hover {
-    background-color: var(--color-background);
 }
 </style>

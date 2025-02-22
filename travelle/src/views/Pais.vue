@@ -1,31 +1,8 @@
-<template>
-    <div class="pais-view" v-if="pais">
-        <h1>Destinos en {{ nombrePais }}</h1>
-        <div class="ciudades-nav">
-            <button @click="selectCiudad(null)" :class="{ active: !ciudadSeleccionada }" class="btn-ciudad">
-                Todos
-            </button>
-            <button v-for="(_, ciudad) in pais.ciudades" :key="ciudad" @click="selectCiudad(ciudad)"
-                :class="{ active: ciudadSeleccionada === ciudad }" class="btn-ciudad">
-                {{ ciudad }}
-            </button>
-        </div>
-        <DestinosPorCiudad v-if="ciudadSeleccionada" :nombrePais="nombrePais" :nombreCiudad="ciudadSeleccionada"
-            :lugares="lugaresFiltered" />
-        <template v-else>
-            <div v-for="(lugares, ciudad) in pais.ciudades" :key="ciudad" class="ciudad-section">
-                <h2 class="ciudad-titulo">{{ ciudad }}</h2>
-                <DestinosPorCiudad :nombrePais="nombrePais" :nombreCiudad="ciudad" :lugares="lugares.lugares" />
-            </div>
-        </template>
-    </div>
-</template>
-
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import DestinosPorCiudad from "@/components/DestinosPorCiudad.vue";
-import data from "@/assets/data/data.json";
+import DestinosPorCiudad from "../components/DestinosPorCiudad.vue";
+import data from "../assets/data/data.json";
 
 const route = useRoute();
 const router = useRouter();
@@ -77,9 +54,35 @@ watch(() => route.params.nombrePais, () => {
 });
 </script>
 
+<template>
+    <div class="pais-view" v-if="pais">
+        <h1>Destinos en {{ nombrePais }}</h1>
+        <div class="ciudades-nav">
+            <button @click="selectCiudad(null)" :class="{ active: !ciudadSeleccionada }" class="btn-ciudad">
+                Todos
+            </button>
+            <button v-for="(_, ciudad) in pais.ciudades" :key="ciudad" @click="selectCiudad(ciudad)"
+                :class="{ active: ciudadSeleccionada === ciudad }" class="btn-ciudad">
+                {{ ciudad }}
+            </button>
+        </div>
+        <DestinosPorCiudad v-if="ciudadSeleccionada" :nombrePais="nombrePais" :nombreCiudad="ciudadSeleccionada"
+            :lugares="lugaresFiltered" />
+        <template v-else>
+            <div v-for="(lugares, ciudad) in pais.ciudades" :key="ciudad" class="ciudad-section">
+                <h2 class="ciudad-titulo">{{ ciudad }}</h2>
+                <DestinosPorCiudad :nombrePais="nombrePais" :nombreCiudad="ciudad" :lugares="lugares.lugares" />
+            </div>
+        </template>
+    </div>
+</template>
+
+
 <style scoped>
 .pais-view {
     padding: 2rem;
+    padding-top: 3.5rem;
+    
 }
 
 h1 {
