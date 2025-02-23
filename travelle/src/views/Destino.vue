@@ -135,6 +135,7 @@ if (!destino.value) {
 .destino-view {
   padding: 2rem;
   max-width: 1200px;
+  padding-top: 5rem;
   margin: 0 auto;
 }
 

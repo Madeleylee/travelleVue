@@ -52,6 +52,7 @@ const destinosAleatorios = computed(() => {
 /* Estilos para la página de inicio */
 .home {
     padding: 2rem;
+    padding-top: 5rem;
 }
 
 /* Estilos para la sección hero */
@@ -83,6 +84,9 @@ h2 {
 
 /* Responsive design */
 @media (max-width: 1024px) {
+    .home {
+        padding: 2rem;
+    }
     .destinos-grid {
         grid-template-columns: repeat(2, 1fr);
     }
