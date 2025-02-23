@@ -2,7 +2,7 @@
     "paises": [
         {
             "id": 1,
-            "name": "spain",
+            "name": "España",
             "ciudades": {
                 "Granada": {
                     "lugares": [
@@ -13,10 +13,22 @@
                                 "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731884454/Travelle/espana/alhambra/img3.jpg"
                             ],
                             "nombre": "La Alhambra",
-                            "ubicacion_url": "https://www.google.es/travel/entity/key/ChUI_8SGkfG99MaAARoIL20vMDdoX2oQBA/overview?ts=CAEaBAoCGgAqBAoAGgA&utm_campaign=sharing&utm_medium=link_btn&utm_source=poi",
+                            "ubicacion_url": "https://maps.app.goo.gl/ExrigJKHsjmLNbeb8",
                             "tipo": "historia",
                             "precio": 14.0,
                             "valoracion": 4.8
+                        },
+                        {
+                            "rutaImagen": [
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg"
+                            ],
+                            "nombre": "Generalife",
+                            "ubicacion_url": "https://maps.app.goo.gl/Jk1HZijtVztC1VBG9",
+                            "tipo": "naturaleza",
+                            "precio": 7.0,
+                            "valoracion": 4.6
                         }
                     ]
                 },
@@ -29,7 +41,7 @@
                                 "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731940950/Travelle/espana/sagradaFamilia/img3.jpg"
                             ],
                             "nombre": "Basílica de la Sagrada Família",
-                            "ubicacion_url": "https://maps.app.goo.gl/2drFQuJ4naZUpErS6",
+                            "ubicacion_url": "https://maps.app.goo.gl/D429cgX5kdUVqcdZ6",
                             "tipo": "arte",
                             "precio": 26.0,
                             "valoracion": 4.8
@@ -41,10 +53,22 @@
                                 "https://res.cloudinary.com/dxhxsxijx/image/upload/v1731886605/Travelle/espana/guell/img3.jpg"
                             ],
                             "nombre": "Parque Güell",
-                            "ubicacion_url": "https://maps.app.goo.gl/ng34sGJrVwu1e2DCA",
+                            "ubicacion_url": "https://maps.app.goo.gl/5CRPFxagmEgxUKZR7",
                             "tipo": "naturaleza",
                             "precio": 10.0,
                             "valoracion": 4.6
+                        },
+                        {
+                            "rutaImagen": [
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg"
+                            ],
+                            "nombre": "Casa Batlló",
+                            "ubicacion_url": "https://maps.app.goo.gl/DBQCigY1D4v5zzZo7",
+                            "tipo": "arte",
+                            "precio": 35.0,
+                            "valoracion": 4.7
                         }
                     ]
                 }
@@ -52,7 +76,7 @@
         },
         {
             "id": 2,
-            "name": "italy",
+            "name": "Italia",
             "ciudades": {
                 "Roma": {
                     "lugares": [
@@ -63,10 +87,22 @@
                                 "https://picsum.photos/200/300.jpg"
                             ],
                             "nombre": "Coliseo de Roma",
-                            "ubicacion_url": "https://maps.app.goo.gl/JHMdg1V1hUXeS5wY9",
+                            "ubicacion_url": "https://maps.app.goo.gl/1EecwErP9w2DGHBg6",
                             "tipo": "historia",
                             "precio": 18.0,
                             "valoracion": 4.7
+                        },
+                        {
+                            "rutaImagen": [
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg"
+                            ],
+                            "nombre": "Basílica de San Pedro",
+                            "ubicacion_url": "https://maps.app.goo.gl/sEkCd3a7qSYD94mFA",
+                            "tipo": "religión",
+                            "precio": 0.0,
+                            "valoracion": 4.9
                         }
                     ]
                 },
@@ -79,10 +115,22 @@
                                 "https://picsum.photos/200/300.jpg"
                             ],
                             "nombre": "Catedral de Florencia",
-                            "ubicacion_url": "https://maps.app.goo.gl/Xm1Hrtb5Bbq",
+                            "ubicacion_url": "https://maps.app.goo.gl/qyNw5hvxGEvt1rhK8",
                             "tipo": "arte",
-                            "precio": 15.0,
+                            "precio": 0.0,
                             "valoracion": 4.8
+                        },
+                        {
+                            "rutaImagen": [
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg",
+                                "https://picsum.photos/200/300.jpg"
+                            ],
+                            "nombre": "Ponte Vecchio",
+                            "ubicacion_url": "https://maps.app.goo.gl/n7WnVQzpZiqcCTtw5",
+                            "tipo": "historia",
+                            "precio": 0.0,
+                            "valoracion": 4.7
                         }
                     ]
                 }
@@ -90,9 +138,9 @@
         },
         {
             "id": 3,
-            "name": "germany",
+            "name": "Alemania",
             "ciudades": {
-                "Berlin": {
+                "Berlín": {
                     "lugares": [
                         {
                             "rutaImagen": [
@@ -101,45 +149,14 @@
                                 "https://picsum.photos/200/300.jpg"
                             ],
                             "nombre": "Puerta de Brandeburgo",
-                            "ubicacion_url": "https://maps.app.goo.gl/qLhYx",
+                            "ubicacion_url": "https://maps.app.goo.gl/S4JXV8ueJAHoFM356",
                             "tipo": "historia",
                             "precio": 0.0,
                             "valoracion": 4.8
                         }
                     ]
-                },
-                "Munich": {
-                    "lugares": [
-                        {
-                            "rutaImagen": [
-                                "https://picsum.photos/200/300.jpg",
-                                "https://picsum.photos/200/300.jpg",
-                                "https://picsum.photos/200/300.jpg"
-                            ],
-                            "nombre": "Marienplatz",
-                            "ubicacion_url": "https://maps.app.goo.gl/7YFbG",
-                            "tipo": "arquitectura",
-                            "precio": 0.0,
-                            "valoracion": 4.7
-                        }
-                    ]
-                },
-                "Hamburg": {
-                    "lugares": [
-                        {
-                            "rutaImagen": [
-                                "https://picsum.photos/200/300.jpg",
-                                "https://picsum.photos/200/300.jpg",
-                                "https://picsum.photos/200/300.jpg"
-                            ],
-                            "nombre": "Puerto de Hamburgo",
-                            "ubicacion_url": "https://maps.app.goo.gl/wC5Yx",
-                            "tipo": "naturaleza",
-                            "precio": 0.0,
-                            "valoracion": 4.6
-                        }
-                    ]
                 }
+
             }
         }
     ]

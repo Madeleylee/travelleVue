@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/Home.vue'
-import Pais from '@/views/Pais.vue'
-import Ciudad from '@/views/Ciudad.vue'
-import Destino from '@/views/Destino.vue'
+import Home from '../views/Home.vue'
+import Pais from '../views/Pais.vue'
+import Ciudad from '../views/Ciudad.vue'
+import Destino from '../views/Destino.vue'
 
 const routes = [
   {
