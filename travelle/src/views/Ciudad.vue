@@ -101,6 +101,11 @@ h1 {
 
 /* Media queries para ajustar el diseño en pantallas más pequeñas */
 @media (max-width: 1024px) {
+    .ciudad-view {
+        padding: 2rem;
+        padding-top: 4rem;
+    }
+
     .lugares-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -108,7 +113,8 @@ h1 {
 
 @media (max-width: 768px) {
     .ciudad-view {
-        padding: 1rem;
+        padding: 2rem;
+        padding-top: 4rem;
     }
 
     h1 {

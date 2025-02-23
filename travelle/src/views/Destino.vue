@@ -322,8 +322,14 @@ h1 {
   cursor: not-allowed;
 }
 
+
 /* Media queries para ajustar el diseño en pantallas más pequeñas */
 @media (max-width: 768px) {
+  .destino-view {
+    padding: 2rem;
+    padding-top: 4rem;
+  }
+
   .destino-content {
     grid-template-columns: 1fr;
   }

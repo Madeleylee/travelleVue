@@ -15,6 +15,7 @@ const searchResults = ref([]); // Almacena los resultados de la búsqueda
 const isHidden = ref(false); // Controla la visibilidad de la barra de navegación
 const lastScrollPosition = ref(0); // Almacena la última posición de desplazamiento
 const navbar = ref(null); // Referencia al elemento de la barra de navegación
+const showResults = ref(false); // Nueva variable para controlar la visibilidad de los resultados
 
 /**
  * Función para buscar destinos basados en la consulta de búsqueda.
@@ -24,6 +25,7 @@ function searchDestinos() {
     // Si la consulta es menor a 2 caracteres, limpia los resultados
     if (searchQuery.value.length < 2) {
         searchResults.value = [];
+        showResults.value = false;
         return;
     }
 
@@ -57,6 +59,7 @@ function searchDestinos() {
 
     // Limita los resultados a los primeros 5
     searchResults.value = results.slice(0, 5);
+    showResults.value = true;
 }
 
 /**
@@ -80,6 +83,7 @@ function navigateToResult(result) {
     // Limpia la consulta y los resultados de búsqueda
     searchQuery.value = '';
     searchResults.value = [];
+    showResults.value = false;
 }
 
 /**
@@ -118,15 +122,25 @@ function onScroll() {
     lastScrollPosition.value = currentScrollPosition;
 }
 
+/**
+ * Función para cerrar los resultados de búsqueda cuando se hace clic fuera del buscador
+ */
+function closeResults(event) {
+    if (!event.target.closest('.search-container')) {
+        showResults.value = false;
+    }
+}
+
 // Hook del ciclo de vida que se ejecuta al montar el componente
 onMounted(() => {
     window.addEventListener('scroll', onScroll);
-    
+    window.addEventListener('click', closeResults);
 });
 
 // Hook del ciclo de vida que se ejecuta al desmontar el componente
 onUnmounted(() => {
     window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('click', closeResults);
 });
 </script>
 
@@ -146,11 +160,13 @@ onUnmounted(() => {
                 <div class="nav-search">
                     <div class="search-container">
                         <SearchIcon :width="24" :height="24" />
-                        <input v-model="searchQuery" @input="searchDestinos" @keyup.enter="handleSearch" type="text"
-                            placeholder="Buscar destino o ciudad..." class="search-input">
-                        <ul v-if="searchResults.length > 0" class="search-results">
-                            <li v-for="result in searchResults" :key="result.id">
-                                <a @click="navigateToResult(result)" class="search-result-link">
+                        <input v-model="searchQuery" @input="searchDestinos" @keyup.enter="handleSearch"
+                            @focus="showResults = true" type="text" placeholder="Buscar destino o ciudad..."
+                            class="search-input">
+                        <ul v-if="showResults && searchQuery.length >= 2" class="search-results">
+                            <li v-if="searchResults.length === 0" class="no-results">No se encuentran resultados</li>
+                            <li v-else v-for="result in searchResults" :key="result.id">
+                                <a @click="navigateToResult(result)">
                                     {{ result.nombre }} ({{ result.tipo === 'ciudad' ? 'Ciudad' : 'Lugar' }}, {{
                                         result.pais
                                     }})
@@ -238,6 +254,7 @@ onUnmounted(() => {
     width: auto;
 }
 
+
 /* Estilos para la lista de navegación de países */
 .nav-list {
     display: flex;
@@ -297,8 +314,7 @@ onUnmounted(() => {
 .search-results {
     position: absolute;
     top: 100%;
-    right: 0;
-    background-color: var(--color-textWhite);
+    background-color: var(--color-background);
     border: 1px solid var(--color-primary);
     border-top: none;
     z-index: 10;
@@ -318,6 +334,13 @@ onUnmounted(() => {
 /* Estilo de los enlaces de los resultados de búsqueda al hacer hover */
 .search-results a:hover {
     background-color: var(--color-background);
+}
+
+/* Estilo para el mensaje de "No se encuentra" */
+.no-results {
+    padding: 0.5rem;
+    color: var(--color-text);
+    font-style: italic;
 }
 
 /* Media queries para ajustar el diseño en pantallas más pequeñas */

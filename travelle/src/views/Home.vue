@@ -86,13 +86,21 @@ h2 {
 @media (max-width: 1024px) {
     .home {
         padding: 2rem;
+        padding-top: 4rem;
     }
+
+
     .destinos-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
+    .home {
+        padding: 2rem;
+        padding-top: 3rem;
+    }
+
     .destinos-grid {
         grid-template-columns: 1fr;
     }

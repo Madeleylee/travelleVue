@@ -27,9 +27,16 @@ const routes = [
   }
 ]
 
+
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  // Configuración de comportamiento de desplazamiento
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
+
+
 
 export default router

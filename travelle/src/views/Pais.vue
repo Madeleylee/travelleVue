@@ -172,6 +172,11 @@ h1 {
 
 /* Media queries para ajustar el diseño en pantallas más pequeñas */
 @media (max-width: 1024px) {
+    .pais-view {
+        padding: 2rem;
+        padding-top: 4rem;
+    }
+
     .ciudad-lugares {
         grid-template-columns: repeat(2, 1fr);
         /* Dos columnas en pantallas medianas */
@@ -180,10 +185,11 @@ h1 {
 
 @media (max-width: 768px) {
     .pais-view {
-        padding: 1rem;
+        padding: 2rem;
+        padding-top: 4rem;
     }
 
-    
+
     .ciudades-nav {
         gap: 0.5rem;
         /* Menos espacio entre botones en pantallas pequeñas */
